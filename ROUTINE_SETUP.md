@@ -67,9 +67,14 @@ git push -u origin main
 
 - **설정 스크립트**:
   ```
-  pip install -r requirements.txt
+  pip install -r "$(find . -name requirements.txt | head -1)"
   ```
   (결과가 캐시되어 매 실행마다 재설치되지 않음)
+  > ⚠️ 그냥 `pip install -r requirements.txt` 로 쓰면
+  > `Could not open requirements file: ... No such file or directory: 'requirements.txt'`
+  > 오류가 날 수 있습니다. 설정 스크립트의 작업 디렉터리가 저장소 루트가 아니라
+  > 저장소가 하위 폴더(`crawling_routines/`)로 clone되기 때문입니다.
+  > 위처럼 `find` 로 경로를 찾아 설치하면 위치와 무관하게 동작합니다.
 
 ### 4. 트리거: 일정
 - 사전 설정 **주간(Weekly)** 선택 → 월요일 지정.
